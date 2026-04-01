@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,8 +8,8 @@ import java.util.List;
 @Entity
 @Table(name="client")
 public class Client {
- @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String nom;
@@ -19,6 +20,7 @@ public class Client {
     private String ville;
 
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Commande> commandes;
 
     public Client( List<Commande> commandes, String ville, String telephone, String email, String nom) {

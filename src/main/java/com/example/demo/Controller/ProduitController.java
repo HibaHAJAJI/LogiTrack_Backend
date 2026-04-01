@@ -42,15 +42,20 @@ public class ProduitController {
         return produitService.RechercheProduitParCategorie(category);
     }
     @GetMapping("/price/{prix}")
-    public List<Produit>findProduitinfirieur(@PathVariable double prix){
-     return produitService.getProduitsByPrixInferieur(prix);
+    public List<Produit>findProduitInfirieur(@PathVariable double prix){
+     return produitService.RechercheProduitParPrixInferieur(prix);
     }
-    @GetMapping("/api/statistics/top-product")
+    @GetMapping("/statistics/top-product")
     public Produit TopProduit(){
         return produitService.getTopProduit();
     }
-    @GetMapping("/api/products/low-stock")
-    public List<Produit> afficherProduitParStockFaible(@RequestParam double prix){
+    @GetMapping("/low-stock")
+    public List<Produit> afficherProduitParStockFaible(@RequestParam int prix){
         return produitService.getProduitsByPrixInferieur(prix);
+    }
+
+    @GetMapping("/quantite")
+    public List<Produit>getProduitByQuantite(int quantite){
+        return produitService.findProduitbyQuantites(quantite);
     }
 }

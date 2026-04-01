@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 import com.example.demo.Enum.Statut;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -18,8 +19,10 @@ public class Commande {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
-    @OneToMany(mappedBy = "commande",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "commande",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<LigneCommande > ligneCommandes;
 
     public Commande() {}

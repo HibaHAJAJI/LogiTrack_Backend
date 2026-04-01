@@ -32,12 +32,13 @@ public class ProduitService {
         return repos.findProduitByPrixLessThan(prix);
     }
 
-    public List<Produit>getProduitsByPrixInferieur(double prix){
-        return repos.findProduitByPrixLessThan(prix);
+    public List<Produit>getProduitsByPrixInferieur(int seuil){
+        return repos.findProduitByPrixLessThan(seuil);
     }
     public Produit getTopProduit(){
         return repos.findToProduit();
     }
+
     public Optional<Produit>ConsulterParId(Long id){
         return repos.findProduitById(id);
     }
@@ -49,5 +50,9 @@ public class ProduitService {
             throw new RuntimeException("Produit introvable");
         }
 
+    }
+
+    public List<Produit>findProduitbyQuantites(int quantite){
+        return repos.findProduitByQuantite(quantite);
     }
 }

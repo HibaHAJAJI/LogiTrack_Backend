@@ -1,8 +1,11 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DTO.ajouterProduitCommandeDto;
 import com.example.demo.Enum.Statut;
 import com.example.demo.Model.Commande;
+import com.example.demo.Model.LigneCommande;
 import com.example.demo.Service.CommandeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +26,7 @@ public class CommandeController {
     public List<Commande>afficherTous(){
         return commandeService.afficherCommandes();
     }
-    
+
     @GetMapping("{id}")
     public Optional<Commande>consulterId(@PathVariable Long id){
         return commandeService.consulterParId(id);
@@ -31,7 +34,7 @@ public class CommandeController {
 
     @GetMapping("client/{clientId}")
     private List<Commande>findByClientId(@PathVariable Long clientId){
-       return commandeService.rechercheParClientId(clientId);
+        return commandeService.rechercheParClientId(clientId);
     }
 
     @GetMapping("/count")
@@ -43,8 +46,9 @@ public class CommandeController {
         return commandeService.creerCommande(clientId);
     }
     @PostMapping("/{orderId}/products")
-    public Commande addProduit(@PathVariable Long orderId,@PathVariable Long produitId,@PathVariable int quantite)throws Exception{
-        return commandeService.ajouterProduit(orderId,produitId,quantite);
+    public ResponseEntity<LigneCommande> addProduit(@PathVariable Long orderId, @RequestBody ajouterProduitCommandeDto produits )throws Exception{
+        LigneCommande ligne =commandeService.ajouterProduit(orderId,produits);
+        return ResponseEntity.ok(ligne);
     }
     @PutMapping("/{id}/status")
     public Commande modiferStatus(@PathVariable Long id,@RequestBody Statut statut) throws Exception {

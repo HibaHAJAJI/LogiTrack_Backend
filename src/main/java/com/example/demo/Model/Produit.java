@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class Produit {
     private double prix;
     private  int quantiteStock;
     @OneToMany(mappedBy = "produit",cascade = CascadeType.ALL)
+    @JsonIgnore
     List<LigneCommande >LigneCommande;
 
     public Produit( String nom, String categorie, double prix, int quantiteStock) {
