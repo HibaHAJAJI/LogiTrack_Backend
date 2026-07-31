@@ -1,34 +1,32 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Table(name="client")
+@Table(name="clients")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+
     private String nom;
-    @Column(nullable = false)
+
     private String email;
 
     private String telephone;
+
     private String ville;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ToString.Exclude
     private List<Commande> commandes;
 
 }

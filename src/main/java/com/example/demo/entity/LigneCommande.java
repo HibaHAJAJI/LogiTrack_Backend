@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,14 +17,15 @@ public class LigneCommande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int quantite;
+
    @ManyToOne
    @JoinColumn(name = "commande_id")
    private Commande commande;
 
    @ManyToOne
    @JoinColumn(name="produit_id")
-   @JsonIgnore
     private Produit produit;
 
 }

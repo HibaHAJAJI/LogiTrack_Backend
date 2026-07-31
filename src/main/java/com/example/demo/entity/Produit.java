@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +26,6 @@ public class Produit {
 
     @OneToMany(mappedBy = "produit",cascade = CascadeType.ALL)
     @ToString.Exclude
-    List<LigneCommande >LigneCommande;
+    List<LigneCommande >LignesCommande;
 
 }
