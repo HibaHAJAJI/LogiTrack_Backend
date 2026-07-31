@@ -26,6 +26,6 @@ public class Produit {
 
     @OneToMany(mappedBy = "produit",cascade = CascadeType.ALL)
     @ToString.Exclude
-    List<LigneCommande >LignesCommande;
+    List<LigneCommande >lignesCommande;
 
 }
