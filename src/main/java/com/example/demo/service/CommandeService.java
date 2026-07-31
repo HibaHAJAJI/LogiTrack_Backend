@@ -1,22 +1,20 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
-import com.example.demo.DTO.ajouterProduitCommandeDto;
+import com.example.demo.dto.ajouterProduitCommandeDto;
 import com.example.demo.Enum.Statut;
-import com.example.demo.Model.Client;
-import com.example.demo.Model.Commande;
+import com.example.demo.entity.Client;
+import com.example.demo.entity.Commande;
 
 
-import com.example.demo.Model.LigneCommande;
-import com.example.demo.Model.Produit;
-import com.example.demo.Repositorie.ClientRepos;
-import com.example.demo.Repositorie.CommandeRepos;
-import com.example.demo.Repositorie.LigneCommandeRepos;
-import com.example.demo.Repositorie.ProduitRepos;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.entity.LigneCommande;
+import com.example.demo.entity.Produit;
+import com.example.demo.repositorie.ClientRepos;
+import com.example.demo.repositorie.CommandeRepos;
+import com.example.demo.repositorie.LigneCommandeRepos;
+import com.example.demo.repositorie.ProduitRepos;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

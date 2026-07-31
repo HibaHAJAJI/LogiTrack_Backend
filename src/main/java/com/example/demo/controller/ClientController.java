@@ -1,9 +1,9 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
 
 
-import com.example.demo.Model.Client;
-import com.example.demo.Service.ClientService;
+import com.example.demo.entity.Client;
+import com.example.demo.service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

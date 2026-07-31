@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.entity;
 import com.example.demo.Enum.Statut;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
-package com.example.demo.Repositorie;
+package com.example.demo.repositorie;
 
-import com.example.demo.Model.LigneCommande;
+import com.example.demo.entity.LigneCommande;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LigneCommandeRepos extends JpaRepository<LigneCommande,Long> {

@@ -1,7 +1,7 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
-import com.example.demo.Model.Produit;
-import com.example.demo.Repositorie.ProduitRepos;
+import com.example.demo.entity.Produit;
+import com.example.demo.repositorie.ProduitRepos;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
