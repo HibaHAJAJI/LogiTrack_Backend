@@ -20,6 +20,4 @@ public class ClientResponseDTO {
 
         private String ville;
 
-
-
 }
