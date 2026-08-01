@@ -66,9 +66,9 @@ public class CommandeServiceImpl implements CommandeService {
         return commandeMapper.toDto(commandeRepos.save(commande));
     }
 
-    public LigneCommandeResponseDTO addProduct(LigneCommandeRequestDTO dto){
+    public LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto){
 
-        Commande commande=commandeRepos.findById(dto.getCommandeId())
+        Commande commande=commandeRepos.findById(orderId)
                 .orElseThrow(()->new RuntimeException("Commande introuvable"));
 
         Produit produit=produitRepos.findById(dto.getProduitId())

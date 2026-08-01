@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.produit.ProduitRequestDTO;
+import com.example.demo.dto.produit.ProduitResponseDTO;
 import com.example.demo.entity.Produit;
 import com.example.demo.service.ProduitService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,53 +12,49 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
+@RequiredArgsConstructor
 public class ProduitController {
-/*
+
     private final ProduitService produitService;
 
-    public ProduitController(ProduitService produitService) {
-        this.produitService = produitService;
-    }
 
     @GetMapping
-    public List<Produit> afficherTous(){
-        return produitService.afficherProduits();
+    public List<ProduitResponseDTO> getAllProducts(){
+        return produitService.findAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Optional<Produit>afficherUneProduit(@PathVariable Long id){
-        return produitService.ConsulterParId(id);
+    public ProduitResponseDTO getProductById(@PathVariable Long id){
+        return produitService.findProductById(id);
     }
 
     @PostMapping
-    public Produit save(@RequestBody Produit produit){
-        return produitService.ajouterProduit(produit);
+    public ProduitResponseDTO CreateProduct(@RequestBody ProduitRequestDTO produit){
+        return produitService.addProduct(produit);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-         produitService.SupprimerParId(id);
+    public void deleteProduct(@PathVariable Long id){
+         produitService.deleteProductById(id);
     }
 
     @GetMapping("/category/{category}")
-    public List<Produit>findProduitParCategorie(@PathVariable String category){
-        return produitService.RechercheProduitParCategorie(category);
-    }
-    @GetMapping("/price/{prix}")
-    public List<Produit>findProduitInfirieur(@PathVariable double prix){
-     return produitService.RechercheProduitParPrixInferieur(prix);
-    }
-    @GetMapping("/statistics/top-product")
-    public Produit TopProduit(){
-        return produitService.getTopProduit();
-    }
-    @GetMapping("/low-stock")
-    public List<Produit> afficherProduitParStockFaible(@RequestParam int prix){
-        return produitService.getProduitsByPrixInferieur(prix);
+    public List<ProduitResponseDTO> getProductByCategory(@PathVariable String category){
+        return produitService.findProductsByCategory(category);
     }
 
-    @GetMapping("/quantite")
-    public List<Produit>getProduitByQuantite(int quantite){
-        return produitService.findProduitbyQuantites(quantite);
-    }*/
+    @GetMapping("/price/{prix}")
+    public List<ProduitResponseDTO>getProductsByPriceLessThan(@PathVariable double prix){
+     return produitService.findProductsByPriceLessThan(prix);
+    }
+
+    @GetMapping("/statistics/top-product")
+    public ProduitResponseDTO TopProduit(){
+        return produitService.getTopProduct();
+    }
+
+    @GetMapping("/low-stock")
+    public List<ProduitResponseDTO> getProductsByLowStock(@RequestParam int seuil){
+        return produitService.findLowStock(seuil);
+    }
 }

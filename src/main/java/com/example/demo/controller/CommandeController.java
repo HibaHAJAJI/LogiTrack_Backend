@@ -1,48 +1,57 @@
 package com.example.demo.controller;
 
+import com.example.demo.Enum.Statut;
+import com.example.demo.dto.commande.CommandeRequestDTO;
+import com.example.demo.dto.commande.CommandeResponseDTO;
+import com.example.demo.dto.lignecommande.LigneCommandeRequestDTO;
+import com.example.demo.dto.lignecommande.LigneCommandeResponseDTO;
+import com.example.demo.service.CommandeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
+@RequiredArgsConstructor
 public class CommandeController {
-/*
-    private final CommandeService commandeService;
 
-    public CommandeController(CommandeService commandeService) {
-        this.commandeService = commandeService;
-    }
+    private final CommandeService commandeService;
 
 
     @GetMapping
-    public List<Commande>afficherTous(){
-        return commandeService.afficherCommandes();
+    public List<CommandeResponseDTO> findAllOrders(){
+        return commandeService.findAllCommandes();
     }
 
-    @GetMapping("{id}")
-    public Optional<Commande>consulterId(@PathVariable Long id){
-        return commandeService.consulterParId(id);
+    @GetMapping("/{id}")
+    public CommandeResponseDTO findOrderById(@PathVariable Long id){
+        return commandeService.findCommandeById(id);
     }
 
-    @GetMapping("client/{clientId}")
-    private List<Commande>findByClientId(@PathVariable Long clientId){
-        return commandeService.rechercheParClientId(clientId);
+    @GetMapping("/client/{clientId}")
+    public List<CommandeResponseDTO>findByClientId(@PathVariable Long clientId){
+        return commandeService.findCommandesByClientId(clientId);
     }
 
     @GetMapping("/count")
-    public long NumbreCommandes(){
+    public long countOrders(){
         return commandeService.countCommandes();
     }
+
     @PostMapping
-    public Commande addCommandeClient(@RequestParam Long clientId) throws Exception {
-        return commandeService.creerCommande(clientId);
+    public CommandeResponseDTO addCommandeClient(@RequestBody CommandeRequestDTO dto){
+        return commandeService.addCommande(dto);
     }
+
     @PostMapping("/{orderId}/products")
-    public ResponseEntity<LigneCommande> addProduit(@PathVariable Long orderId, @RequestBody ajouterProduitCommandeDto produits )throws Exception{
-        LigneCommande ligne =commandeService.ajouterProduit(orderId,produits);
-        return ResponseEntity.ok(ligne);
+    public ResponseEntity<LigneCommandeResponseDTO> addProduit(@PathVariable Long orderId,@RequestBody LigneCommandeRequestDTO dto ){
+        return ResponseEntity.ok(commandeService.addProduct(orderId, dto));
     }
+
     @PutMapping("/{id}/status")
-    public Commande modiferStatus(@PathVariable Long id,@RequestBody Statut statut) throws Exception {
+    public CommandeResponseDTO updateOrderStatus(@PathVariable Long id,@RequestBody Statut statut){
         return commandeService.updateStatus(id, statut);
-    }*/
+    }
 }

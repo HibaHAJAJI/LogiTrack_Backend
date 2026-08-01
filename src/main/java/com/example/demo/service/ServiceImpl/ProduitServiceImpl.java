@@ -23,16 +23,16 @@ public class ProduitServiceImpl  implements ProduitService {
         return mapper.toDto(repos.save(produit));
     }
 
-    public  List<ProduitResponseDTO> getAllProducts(){
+    public List<ProduitResponseDTO> findAllProducts(){
         return mapper.toDtoList(repos.findAll());
     }
 
-    public ProduitResponseDTO findById(Long id){
+    public ProduitResponseDTO findProductById(Long id){
         Produit produit=repos.findById(id).orElseThrow(()->new RuntimeException("Produit introvable"));
         return mapper.toDto(produit);
     }
 
-    public  void deleteById(Long id){
+    public void deleteProductById(Long id){
         if(!repos.existsById(id)){
             throw new RuntimeException("Produit introvable");
         }

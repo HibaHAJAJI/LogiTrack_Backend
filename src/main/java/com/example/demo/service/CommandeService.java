@@ -19,14 +19,10 @@ public interface CommandeService {
 
     List<CommandeResponseDTO>findCommandesByClientId(Long clientId);
 
-    LigneCommandeResponseDTO addProduct(LigneCommandeRequestDTO dto);
+    LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto);
 
     CommandeResponseDTO updateStatus(Long id, Statut statut);
 
     CommandeResponseDTO addCommande(CommandeRequestDTO dto);
-
-
-
-
 
 }
