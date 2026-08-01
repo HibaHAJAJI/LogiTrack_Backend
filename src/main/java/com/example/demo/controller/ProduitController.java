@@ -10,7 +10,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/products")
 public class ProduitController {
-
+/*
     private final ProduitService produitService;
 
     public ProduitController(ProduitService produitService) {
@@ -57,5 +57,5 @@ public class ProduitController {
     @GetMapping("/quantite")
     public List<Produit>getProduitByQuantite(int quantite){
         return produitService.findProduitbyQuantites(quantite);
-    }
+    }*/
 }

@@ -15,5 +15,5 @@ public interface ClientMapper {
 
     ClientResponseDTO toDto(Client client);
 
-    List<ClientResponseDTO> toDtos(List<Client> clients);
+    List<ClientResponseDTO> toDtoList(List<Client> clients);
 }

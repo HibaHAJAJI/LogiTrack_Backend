@@ -1,58 +1,61 @@
 package com.example.demo.service.ServiceImpl;
 
+import com.example.demo.dto.produit.ProduitRequestDTO;
+import com.example.demo.dto.produit.ProduitResponseDTO;
 import com.example.demo.entity.Produit;
+import com.example.demo.mapper.ProduitMapper;
 import com.example.demo.repositorie.ProduitRepos;
+import com.example.demo.service.ProduitService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ProduitServiceImpl {
+@RequiredArgsConstructor
+public class ProduitServiceImpl  implements ProduitService {
+
     private final ProduitRepos repos;
+    private final ProduitMapper mapper;
 
-    public ProduitService(ProduitRepos repos) {
-        this.repos = repos;
-    }
-
-
-    public Produit ajouterProduit(Produit produit){
-        return repos.save(produit);
+    public ProduitResponseDTO addProduct(ProduitRequestDTO dto){
+        Produit produit = mapper.toEntity(dto);
+        return mapper.toDto(repos.save(produit));
     }
 
-    public List<Produit> afficherProduits(){
-        return repos.findAll();
+    public  List<ProduitResponseDTO> getAllProducts(){
+        return mapper.toDtoList(repos.findAll());
     }
 
-    public List<Produit>RechercheProduitParCategorie(String categorie){
-        return repos.findProduitByCategorie(categorie);
-    }
-    public List<Produit>RechercheProduitParPrixInferieur(double prix){
-        return repos.findProduitByPrixLessThan(prix);
+    public ProduitResponseDTO findById(Long id){
+        Produit produit=repos.findById(id).orElseThrow(()->new RuntimeException("Produit introvable"));
+        return mapper.toDto(produit);
     }
 
-    public List<Produit>getProduitsByPrixInferieur(int seuil){
-        return repos.findProduitByPrixLessThan(seuil);
-    }
-    public Produit getTopProduit(){
-        return repos.findToProduit();
-    }
-
-    public Optional<Produit> ConsulterParId(Long id){
-        return repos.findProduitById(id);
-    }
-    public void SupprimerParId(Long id){
-        Optional<Produit>produit=repos.findProduitById(id);
-        if(produit.isPresent()){
-            repos.deleteById(id);
-        }else {
+    public  void deleteById(Long id){
+        if(!repos.existsById(id)){
             throw new RuntimeException("Produit introvable");
         }
-
+        repos.deleteById(id);
     }
 
-    public List<Produit>findProduitbyQuantites(int quantite){
-        return repos.findProduitByQuantite(quantite);
+    public List<ProduitResponseDTO> findProductsByCategory(String categorie){
+        return mapper.toDtoList(repos.findByCategorie(categorie));
     }
+
+    public List<ProduitResponseDTO> findProductsByPriceLessThan(double prix){
+        return mapper.toDtoList(repos.findByPrixLessThan(prix));
+    }
+
+    public List<ProduitResponseDTO> findLowStock(int seuil){
+        return mapper.toDtoList(repos.findLowStock(seuil));
+    }
+    public ProduitResponseDTO getTopProduct(){
+        Produit produit = repos.findTopProduct().stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Aucun produit trouvé"));
+        return mapper.toDto(produit);
+    }
+
 }
 

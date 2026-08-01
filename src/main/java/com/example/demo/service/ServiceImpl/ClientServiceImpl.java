@@ -19,14 +19,13 @@ public class ClientServiceImpl  implements ClientService {
     private final ClientRepos repos;
     private final ClientMapper mapper;
 
-
     public ClientResponseDTO addClient(ClientRequestDTO dto){
         Client client= mapper.toEntity(dto);
         return mapper.toDto(repos.save(client));
     }
 
     public List<ClientResponseDTO> findAllClients(){
-        return mapper.toDtos(repos.findAll());
+        return mapper.toDtoList(repos.findAll());
     }
 
     public ClientResponseDTO findById(Long id) {
