@@ -5,14 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CommandeRepos extends JpaRepository<Commande,Long> {
 
-    Optional<Commande>findCommandeById(Long id);
+    List<Commande> findByClientId(Long clientId);
 
-    List<Commande> findCommandeByClientId(Long clientId);
-
-    @Query("select count(c) from Commande c")
+    @Query("SELECT COUNT(c) FROM Commande c")
     long countCommande();
+
 }
