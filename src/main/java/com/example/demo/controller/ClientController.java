@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/clients")
 public class ClientController {
+    /*
     private final ClientService clientService;
 
     public ClientController(ClientService clientService) {
@@ -33,5 +34,5 @@ public class ClientController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){
         clientService.supprimerParID(id);
-    }
+    }*/
 }

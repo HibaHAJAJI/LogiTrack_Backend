@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProduitRepos extends JpaRepository<Produit,Long> {
+
     Optional<Produit>findProduitById(Long id);
-    void deleteById(Long id);
 
     List<Produit> findProduitByCategorie(String categorie);
 
@@ -23,6 +23,6 @@ public interface ProduitRepos extends JpaRepository<Produit,Long> {
     Produit findToProduit();
 
 
-@Query("select p from Produit p where p.quantiteStock =:quantite")
+    @Query("select p from Produit p where p.quantiteStock =:quantite")
     List<Produit>findProduitByQuantite(@Param("quantite")int quantite);
 }

@@ -1,40 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Client;
-import com.example.demo.repositorie.ClientRepos;
-import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.client.ClientRequestDTO;
+import com.example.demo.dto.client.ClientResponseDTO;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class ClientService {
+public interface ClientService {
 
-    private final ClientRepos repos;
+    ClientResponseDTO addClient(ClientRequestDTO dto);
 
-    public ClientService(ClientRepos repos) {
-        this.repos = repos;
-    }
+    List<ClientResponseDTO> findAllClients();
 
+   ClientResponseDTO findById(Long id);
 
-    public Client ajouterClient(Client client){
-        return repos.save(client);
-    }
-
-    public List<Client> afficherClient(){
-        return repos.findAll();
-    }
-
-    public Optional<Client> consulterParId(Long id) {
-        return repos.findClientById(id) ;
-    }
-
-    public void supprimerParID(Long id){
-     Optional<Client>client=repos.findClientById(id);
-     if(client.isPresent()){
-         repos.deleteById(id);
-     }else {
-         throw new RuntimeException("Client introvable");
-     }
-    }
+    void deleteById(Long id);
 }

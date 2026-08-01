@@ -14,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/orders")
 public class CommandeController {
-
+/*
     private final CommandeService commandeService;
 
     public CommandeController(CommandeService commandeService) {
@@ -53,5 +53,5 @@ public class CommandeController {
     @PutMapping("/{id}/status")
     public Commande modiferStatus(@PathVariable Long id,@RequestBody Statut statut) throws Exception {
         return commandeService.updateStatus(id, statut);
-    }
+    }*/
 }
