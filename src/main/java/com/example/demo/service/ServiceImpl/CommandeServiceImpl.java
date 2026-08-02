@@ -18,10 +18,11 @@ import com.example.demo.repositorie.LigneCommandeRepos;
 import com.example.demo.repositorie.ProduitRepos;
 import com.example.demo.service.CommandeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +36,8 @@ public class CommandeServiceImpl implements CommandeService {
     private final LigneCommandeMapper ligneCommandeMapper;
 
 
-    public List<CommandeResponseDTO> findAllCommandes(){
-        return commandeMapper.toDtoList(commandeRepos.findAll());
+    public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable){
+        return commandeRepos.findAll(pageable).map(commandeMapper::toDto);
     }
 
     public CommandeResponseDTO findCommandeById(Long id){
@@ -49,8 +50,8 @@ public class CommandeServiceImpl implements CommandeService {
         return commandeRepos.count();
     }
 
-    public  List<CommandeResponseDTO>findCommandesByClientId(Long clientId){
-        return commandeMapper.toDtoList(commandeRepos.findByClientId(clientId));
+    public  Page<CommandeResponseDTO>findCommandesByClientId(Long clientId, Pageable pageable){
+        return commandeRepos.findByClientId(clientId, pageable).map(commandeMapper::toDto);
     }
 
     public CommandeResponseDTO addCommande(CommandeRequestDTO dto){

@@ -3,25 +3,25 @@ package com.example.demo.service;
 
 import com.example.demo.dto.produit.ProduitRequestDTO;
 import com.example.demo.dto.produit.ProduitResponseDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ProduitService {
 
     ProduitResponseDTO addProduct(ProduitRequestDTO dto);
 
-    List<ProduitResponseDTO> findAllProducts();
+    Page<ProduitResponseDTO> findAllProducts(Pageable pageable);
 
     ProduitResponseDTO findProductById(Long id);
 
     void deleteProductById(Long id);
 
-    List<ProduitResponseDTO> findProductsByCategory(String categorie);
+    Page<ProduitResponseDTO> findProductsByCategory(String categorie, Pageable pageable);
 
-    List<ProduitResponseDTO> findProductsByPriceLessThan(double prix);
+    Page<ProduitResponseDTO> findProductsByPriceLessThan(double prix, Pageable pageable);
 
-    List<ProduitResponseDTO> findLowStock(int seuil);
+    Page<ProduitResponseDTO> findLowStock(int seuil, Pageable pageable);
 
     ProduitResponseDTO getTopProduct();
 

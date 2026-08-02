@@ -6,18 +6,18 @@ import com.example.demo.dto.commande.CommandeRequestDTO;
 import com.example.demo.dto.commande.CommandeResponseDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeRequestDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeResponseDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CommandeService {
 
-    List<CommandeResponseDTO> findAllCommandes();
+    Page<CommandeResponseDTO> findAllCommandes(Pageable pageable);
 
     CommandeResponseDTO findCommandeById(Long id);
 
     long countCommandes();
 
-    List<CommandeResponseDTO>findCommandesByClientId(Long clientId);
+    Page<CommandeResponseDTO>findCommandesByClientId(Long clientId, Pageable pageable);
 
     LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto);
 

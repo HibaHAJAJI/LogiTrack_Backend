@@ -2,14 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.produit.ProduitRequestDTO;
 import com.example.demo.dto.produit.ProduitResponseDTO;
-import com.example.demo.entity.Produit;
 import com.example.demo.service.ProduitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -20,42 +20,43 @@ public class ProduitController {
 
 
     @GetMapping
-    public List<ProduitResponseDTO> getAllProducts(){
-        return produitService.findAllProducts();
+    public ResponseEntity<Page<ProduitResponseDTO>> getAllProducts(Pageable pageable){
+        return ResponseEntity.ok(produitService.findAllProducts(pageable));
     }
 
     @GetMapping("/{id}")
-    public ProduitResponseDTO getProductById(@PathVariable Long id){
-        return produitService.findProductById(id);
+    public ResponseEntity<ProduitResponseDTO> getProductById(@PathVariable Long id){
+        return ResponseEntity.ok(produitService.findProductById(id));
     }
 
     @PostMapping
-    public ProduitResponseDTO CreateProduct(@Valid @RequestBody ProduitRequestDTO produit){
-        return produitService.addProduct(produit);
+    public ResponseEntity<ProduitResponseDTO> CreateProduct(@Valid @RequestBody ProduitRequestDTO produit){
+        return ResponseEntity.ok(produitService.addProduct(produit));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
          produitService.deleteProductById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/category/{category}")
-    public List<ProduitResponseDTO> getProductByCategory(@PathVariable String category){
-        return produitService.findProductsByCategory(category);
+    public ResponseEntity<Page<ProduitResponseDTO>> getProductByCategory(@PathVariable String category, Pageable pageable){
+        return ResponseEntity.ok(produitService.findProductsByCategory(category, pageable));
     }
 
     @GetMapping("/price/{prix}")
-    public List<ProduitResponseDTO>getProductsByPriceLessThan(@PathVariable double prix){
-     return produitService.findProductsByPriceLessThan(prix);
+    public ResponseEntity<Page<ProduitResponseDTO>> getProductsByPriceLessThan(@PathVariable double prix, Pageable pageable){
+     return ResponseEntity.ok(produitService.findProductsByPriceLessThan(prix, pageable));
     }
 
     @GetMapping("/statistics/top-product")
-    public ProduitResponseDTO TopProduit(){
-        return produitService.getTopProduct();
+    public ResponseEntity<ProduitResponseDTO> TopProduit(){
+        return ResponseEntity.ok(produitService.getTopProduct());
     }
 
     @GetMapping("/low-stock")
-    public List<ProduitResponseDTO> getProductsByLowStock(@RequestParam int seuil){
-        return produitService.findLowStock(seuil);
+    public ResponseEntity<Page<ProduitResponseDTO>> getProductsByLowStock(@RequestParam int seuil,Pageable pageable){
+        return ResponseEntity.ok(produitService.findLowStock(seuil, pageable));
     }
 }

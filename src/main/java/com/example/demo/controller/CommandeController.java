@@ -8,10 +8,11 @@ import com.example.demo.dto.lignecommande.LigneCommandeResponseDTO;
 import com.example.demo.service.CommandeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -22,28 +23,28 @@ public class CommandeController {
 
 
     @GetMapping
-    public List<CommandeResponseDTO> findAllOrders(){
-        return commandeService.findAllCommandes();
+    public ResponseEntity<Page<CommandeResponseDTO>> findAllOrders(Pageable pageable){
+        return ResponseEntity.ok(commandeService.findAllCommandes(pageable));
     }
 
     @GetMapping("/{id}")
-    public CommandeResponseDTO findOrderById(@PathVariable Long id){
-        return commandeService.findCommandeById(id);
+    public ResponseEntity<CommandeResponseDTO> findOrderById(@PathVariable Long id){
+        return ResponseEntity.ok(commandeService.findCommandeById(id));
     }
 
     @GetMapping("/client/{clientId}")
-    public List<CommandeResponseDTO>findByClientId(@PathVariable Long clientId){
-        return commandeService.findCommandesByClientId(clientId);
+    public ResponseEntity<Page<CommandeResponseDTO>> findByClientId(@PathVariable Long clientId, Pageable pageable){
+        return ResponseEntity.ok(commandeService.findCommandesByClientId(clientId, pageable));
     }
 
     @GetMapping("/count")
-    public long countOrders(){
-        return commandeService.countCommandes();
+    public ResponseEntity<Long> countOrders(){
+        return ResponseEntity.ok(commandeService.countCommandes());
     }
 
     @PostMapping
-    public CommandeResponseDTO addCommandeClient(@Valid @RequestBody CommandeRequestDTO dto){
-        return commandeService.addCommande(dto);
+    public ResponseEntity<CommandeResponseDTO> addCommandeClient(@Valid @RequestBody CommandeRequestDTO dto){
+        return ResponseEntity.ok(commandeService.addCommande(dto));
     }
 
     @PostMapping("/{orderId}/products")
@@ -52,7 +53,7 @@ public class CommandeController {
     }
 
     @PutMapping("/{id}/status")
-    public CommandeResponseDTO updateOrderStatus(@PathVariable Long id,@RequestBody Statut statut){
-        return commandeService.updateStatus(id, statut);
+    public ResponseEntity<CommandeResponseDTO> updateOrderStatus(@PathVariable Long id,@RequestBody Statut statut){
+        return ResponseEntity.ok(commandeService.updateStatus(id, statut));
     }
 }

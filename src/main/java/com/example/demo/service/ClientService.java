@@ -3,15 +3,16 @@ package com.example.demo.service;
 
 import com.example.demo.dto.client.ClientRequestDTO;
 import com.example.demo.dto.client.ClientResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 
 public interface ClientService {
 
     ClientResponseDTO addClient(ClientRequestDTO dto);
 
-    List<ClientResponseDTO> findAllClients();
+    Page<ClientResponseDTO> findAllClients(Pageable pageable);
 
     ClientResponseDTO findById(Long id);
 

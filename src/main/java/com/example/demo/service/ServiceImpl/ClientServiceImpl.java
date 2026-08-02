@@ -8,9 +8,10 @@ import com.example.demo.mapper.ClientMapper;
 import com.example.demo.repositorie.ClientRepos;
 import com.example.demo.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +25,8 @@ public class ClientServiceImpl  implements ClientService {
         return mapper.toDto(repos.save(client));
     }
 
-    public List<ClientResponseDTO> findAllClients(){
-        return mapper.toDtoList(repos.findAll());
+    public Page<ClientResponseDTO> findAllClients(Pageable pageable){
+        return repos.findAll(pageable).map(mapper::toDto);
     }
 
     public ClientResponseDTO findById(Long id) {
@@ -38,7 +39,6 @@ public class ClientServiceImpl  implements ClientService {
         if (!repos.existsById(id)) {
             throw new RuntimeException("Client introuvable !");
         }
-
         repos.deleteById(id);
     }
 }

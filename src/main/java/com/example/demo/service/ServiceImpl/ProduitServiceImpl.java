@@ -7,9 +7,10 @@ import com.example.demo.mapper.ProduitMapper;
 import com.example.demo.repositorie.ProduitRepos;
 import com.example.demo.service.ProduitService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +24,8 @@ public class ProduitServiceImpl  implements ProduitService {
         return mapper.toDto(repos.save(produit));
     }
 
-    public List<ProduitResponseDTO> findAllProducts(){
-        return mapper.toDtoList(repos.findAll());
+    public Page<ProduitResponseDTO> findAllProducts(Pageable pageable){
+        return repos.findAll(pageable).map(mapper::toDto);
     }
 
     public ProduitResponseDTO findProductById(Long id){
@@ -39,17 +40,18 @@ public class ProduitServiceImpl  implements ProduitService {
         repos.deleteById(id);
     }
 
-    public List<ProduitResponseDTO> findProductsByCategory(String categorie){
-        return mapper.toDtoList(repos.findByCategorie(categorie));
+    public Page<ProduitResponseDTO> findProductsByCategory(String categorie, Pageable pageable){
+        return repos.findByCategorie(categorie, pageable).map(mapper::toDto);
     }
 
-    public List<ProduitResponseDTO> findProductsByPriceLessThan(double prix){
-        return mapper.toDtoList(repos.findByPrixLessThan(prix));
+    public Page<ProduitResponseDTO> findProductsByPriceLessThan(double prix, Pageable pageable){
+        return repos.findByPrixLessThan(prix, pageable).map(mapper::toDto);
     }
 
-    public List<ProduitResponseDTO> findLowStock(int seuil){
-        return mapper.toDtoList(repos.findLowStock(seuil));
+    public Page<ProduitResponseDTO> findLowStock(int seuil, Pageable pageable){
+        return repos.findLowStock(seuil, pageable).map(mapper::toDto);
     }
+
     public ProduitResponseDTO getTopProduct(){
         Produit produit = repos.findTopProduct().stream()
                 .findFirst()
