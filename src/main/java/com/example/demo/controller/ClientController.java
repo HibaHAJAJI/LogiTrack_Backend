@@ -5,6 +5,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.client.ClientRequestDTO;
 import com.example.demo.dto.client.ClientResponseDTO;
 import com.example.demo.service.ClientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientResponseDTO CreateClient(@RequestBody ClientRequestDTO client){
+    public ClientResponseDTO CreateClient(@Valid @RequestBody ClientRequestDTO client){
         return clientService.addClient(client);
     }
 

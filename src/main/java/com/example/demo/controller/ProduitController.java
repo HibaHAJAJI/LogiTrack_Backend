@@ -4,6 +4,7 @@ import com.example.demo.dto.produit.ProduitRequestDTO;
 import com.example.demo.dto.produit.ProduitResponseDTO;
 import com.example.demo.entity.Produit;
 import com.example.demo.service.ProduitService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class ProduitController {
     }
 
     @PostMapping
-    public ProduitResponseDTO CreateProduct(@RequestBody ProduitRequestDTO produit){
+    public ProduitResponseDTO CreateProduct(@Valid @RequestBody ProduitRequestDTO produit){
         return produitService.addProduct(produit);
     }
 

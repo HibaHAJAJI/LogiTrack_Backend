@@ -6,6 +6,7 @@ import com.example.demo.dto.commande.CommandeResponseDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeRequestDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeResponseDTO;
 import com.example.demo.service.CommandeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,12 +42,12 @@ public class CommandeController {
     }
 
     @PostMapping
-    public CommandeResponseDTO addCommandeClient(@RequestBody CommandeRequestDTO dto){
+    public CommandeResponseDTO addCommandeClient(@Valid @RequestBody CommandeRequestDTO dto){
         return commandeService.addCommande(dto);
     }
 
     @PostMapping("/{orderId}/products")
-    public ResponseEntity<LigneCommandeResponseDTO> addProduit(@PathVariable Long orderId,@RequestBody LigneCommandeRequestDTO dto ){
+    public ResponseEntity<LigneCommandeResponseDTO> addProduit(@PathVariable Long orderId,@Valid @RequestBody LigneCommandeRequestDTO dto ){
         return ResponseEntity.ok(commandeService.addProduct(orderId, dto));
     }
 

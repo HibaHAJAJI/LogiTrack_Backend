@@ -2,6 +2,7 @@ package com.example.demo.dto.commande;
 
 
 import com.example.demo.Enum.Statut;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,6 @@ public class CommandeRequestDTO {
 
     private Statut statut;
 
+    @NotNull(message = "clientId cannot be null")
     private Long clientId;
 }
