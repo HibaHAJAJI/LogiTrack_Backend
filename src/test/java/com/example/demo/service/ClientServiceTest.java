@@ -94,8 +94,6 @@ class ClientServiceTest {
 
         Long id = 1L;
 
-        Client client = new Client();
-
         when(clientRepos.existsById(id)).thenReturn(true);
 
         clientService.deleteById(id);
