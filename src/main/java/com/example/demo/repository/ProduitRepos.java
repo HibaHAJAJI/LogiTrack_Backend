@@ -18,6 +18,5 @@ public interface ProduitRepos extends JpaRepository<Produit,Long> {
     Page<Produit> findLowStock(@Param("seuil") int seuil,Pageable pageable);
 
     @Query(" SELECT ligne.produit FROM LigneCommande ligne GROUP BY ligne.produit ORDER BY SUM(ligne.quantite) DESC")
-    Page<Produit>findTopProduct();
-
+    Page<Produit> findTopProduct(Pageable pageable);
 }

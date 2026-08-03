@@ -52,11 +52,9 @@ public class ProduitServiceImpl  implements ProduitService {
         return repos.findLowStock(seuil, pageable).map(mapper::toDto);
     }
 
-    public ProduitResponseDTO getTopProduct(){
-        Produit produit = repos.findTopProduct().stream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Aucun produit trouvé"));
-        return mapper.toDto(produit);
+    public Page<ProduitResponseDTO>  getTopProduct(Pageable pageable){
+        Page<Produit> produits = repos.findTopProduct(pageable);
+        return produits.map(mapper::toDto);
     }
 
 }

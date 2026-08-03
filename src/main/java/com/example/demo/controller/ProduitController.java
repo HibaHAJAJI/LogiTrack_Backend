@@ -51,8 +51,8 @@ public class ProduitController {
     }
 
     @GetMapping("/statistics/top-product")
-    public ResponseEntity<ProduitResponseDTO> TopProduit(){
-        return ResponseEntity.ok(produitService.getTopProduct());
+    public ResponseEntity<Page<ProduitResponseDTO>> TopProduit(Pageable pageable){
+        return ResponseEntity.ok(produitService.getTopProduct(pageable));
     }
 
     @GetMapping("/low-stock")

@@ -10,7 +10,9 @@ import com.example.demo.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -21,6 +23,12 @@ public class ClientServiceImpl  implements ClientService {
     private final ClientMapper mapper;
 
     public ClientResponseDTO addClient(ClientRequestDTO dto){
+        if (repos.findByEmail(dto.getEmail()).isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Un client avec cet email existe déjà"
+            );
+        }
         Client client= mapper.toEntity(dto);
         return mapper.toDto(repos.save(client));
     }

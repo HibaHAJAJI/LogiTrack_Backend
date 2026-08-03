@@ -23,6 +23,6 @@ public interface ProduitService {
 
     Page<ProduitResponseDTO> findLowStock(int seuil, Pageable pageable);
 
-    ProduitResponseDTO getTopProduct();
+   Page <ProduitResponseDTO> getTopProduct(Pageable pageable);
 
 }
