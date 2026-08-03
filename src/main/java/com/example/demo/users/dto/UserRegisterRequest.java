@@ -1,6 +1,6 @@
 package com.example.demo.users.dto;
 
-import com.example.demo.Enum.Role;
+import com.example.demo.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

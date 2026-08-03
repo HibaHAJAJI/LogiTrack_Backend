@@ -5,7 +5,7 @@ import com.example.demo.dto.client.ClientRequestDTO;
 import com.example.demo.dto.client.ClientResponseDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.mapper.ClientMapper;
-import com.example.demo.repositorie.ClientRepos;
+import com.example.demo.repository.ClientRepos;
 import com.example.demo.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package com.example.demo.users;
 
 
-import com.example.demo.Enum.Role;
+import com.example.demo.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

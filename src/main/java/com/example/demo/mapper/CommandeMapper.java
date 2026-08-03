@@ -6,8 +6,6 @@ import com.example.demo.dto.commande.CommandeResponseDTO;
 import com.example.demo.entity.Commande;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 @Mapper(componentModel= "spring")
 public interface CommandeMapper {
 
@@ -15,5 +13,4 @@ public interface CommandeMapper {
 
     CommandeResponseDTO toDto(Commande commande);
 
-    List<CommandeResponseDTO> toDtoList(List<Commande> commandes);
 }

@@ -1,7 +1,7 @@
 package com.example.demo.service.ServiceImpl;
 
 
-import com.example.demo.Enum.Statut;
+import com.example.demo.enums.Statut;
 import com.example.demo.dto.commande.CommandeRequestDTO;
 import com.example.demo.dto.commande.CommandeResponseDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeRequestDTO;
@@ -12,10 +12,10 @@ import com.example.demo.entity.LigneCommande;
 import com.example.demo.entity.Produit;
 import com.example.demo.mapper.CommandeMapper;
 import com.example.demo.mapper.LigneCommandeMapper;
-import com.example.demo.repositorie.ClientRepos;
-import com.example.demo.repositorie.CommandeRepos;
-import com.example.demo.repositorie.LigneCommandeRepos;
-import com.example.demo.repositorie.ProduitRepos;
+import com.example.demo.repository.ClientRepos;
+import com.example.demo.repository.CommandeRepos;
+import com.example.demo.repository.LigneCommandeRepos;
+import com.example.demo.repository.ProduitRepos;
 import com.example.demo.service.CommandeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

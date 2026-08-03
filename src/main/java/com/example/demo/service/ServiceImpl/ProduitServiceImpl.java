@@ -4,7 +4,7 @@ import com.example.demo.dto.produit.ProduitRequestDTO;
 import com.example.demo.dto.produit.ProduitResponseDTO;
 import com.example.demo.entity.Produit;
 import com.example.demo.mapper.ProduitMapper;
-import com.example.demo.repositorie.ProduitRepos;
+import com.example.demo.repository.ProduitRepos;
 import com.example.demo.service.ProduitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

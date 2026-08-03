@@ -6,7 +6,6 @@ import com.example.demo.dto.client.ClientResponseDTO;
 import com.example.demo.entity.Client;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 
 @Mapper(componentModel= "spring")
 public interface ClientMapper {
@@ -15,5 +14,4 @@ public interface ClientMapper {
 
     ClientResponseDTO toDto(Client client);
 
-    List<ClientResponseDTO> toDtoList(List<Client> clients);
 }

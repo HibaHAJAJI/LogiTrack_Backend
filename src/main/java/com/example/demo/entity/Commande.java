@@ -1,5 +1,5 @@
 package com.example.demo.entity;
-import com.example.demo.Enum.Statut;
+import com.example.demo.enums.Statut;
 import jakarta.persistence.*;
 import lombok.*;
 

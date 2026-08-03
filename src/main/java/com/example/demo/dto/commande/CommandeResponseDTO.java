@@ -1,7 +1,7 @@
 package com.example.demo.dto.commande;
 
 
-import com.example.demo.Enum.Statut;
+import com.example.demo.enums.Statut;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

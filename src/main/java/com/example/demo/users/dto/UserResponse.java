@@ -1,7 +1,7 @@
 package com.example.demo.users.dto;
 
 
-import com.example.demo.Enum.Role;
+import com.example.demo.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

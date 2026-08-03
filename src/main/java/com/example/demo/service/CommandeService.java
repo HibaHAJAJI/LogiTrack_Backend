@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 
-import com.example.demo.Enum.Statut;
+import com.example.demo.enums.Statut;
 import com.example.demo.dto.commande.CommandeRequestDTO;
 import com.example.demo.dto.commande.CommandeResponseDTO;
 import com.example.demo.dto.lignecommande.LigneCommandeRequestDTO;

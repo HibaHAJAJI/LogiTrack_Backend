@@ -4,7 +4,7 @@ import com.example.demo.dto.client.ClientRequestDTO;
 import com.example.demo.dto.client.ClientResponseDTO;
 import com.example.demo.entity.Client;
 import com.example.demo.mapper.ClientMapper;
-import com.example.demo.repositorie.ClientRepos;
+import com.example.demo.repository.ClientRepos;
 import com.example.demo.service.ServiceImpl.ClientServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
