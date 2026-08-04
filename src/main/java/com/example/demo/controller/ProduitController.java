@@ -69,3 +69,4 @@ public class ProduitController {
         return ResponseEntity.ok(produitService.findLowStock(seuil, pageable));
     }
 }
+
