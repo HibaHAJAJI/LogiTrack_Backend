@@ -40,7 +40,8 @@ public class DashboardService {
         dto.setCommandesLivrees(commandeRepos.countByStatut(Statut.LIVREE));
 
 
-        dto.setProduitsStockFaible(produitRepos.countByStockLessThan(10));
+        dto.setProduitsStockFaible(produitRepos.findLowStock(10,
+                PageRequest.of(0, 100)).getTotalElements());
 
 
         Page<String>page = ligneCommandeRepos.findMostOrderedProduct(PageRequest.of(0,1));
