@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 
 @RestController
 @RequestMapping("/api/orders")
@@ -69,5 +71,11 @@ public class CommandeController {
     public Page<LigneCommandeResponseDTO> getProducts(@PathVariable Long id, Pageable pageable) {
 
         return commandeService.getProducts(id, pageable);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/count")
+    public long count(@RequestBody Statut statut,@PathVariable LocalDate dateCommande){
+        return commandeService.counOrderLivre(statut,dateCommande);
     }
 }

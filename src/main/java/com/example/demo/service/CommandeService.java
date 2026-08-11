@@ -9,6 +9,8 @@ import com.example.demo.dto.lignecommande.LigneCommandeResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
 public interface CommandeService {
 
     Page<CommandeResponseDTO> findAllCommandes(Pageable pageable);
@@ -26,5 +28,7 @@ public interface CommandeService {
     CommandeResponseDTO addCommande(CommandeRequestDTO dto);
     
     Page<LigneCommandeResponseDTO> getProducts(Long orderId, Pageable pageable);
+
+    long counOrderLivre (Statut statut,LocalDate dateCommande);
 
 }

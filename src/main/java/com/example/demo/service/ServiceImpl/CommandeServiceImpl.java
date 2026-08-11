@@ -36,30 +36,30 @@ public class CommandeServiceImpl implements CommandeService {
     private final LigneCommandeMapper ligneCommandeMapper;
 
 
-    public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable){
+    public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable) {
         return commandeRepos.findAll(pageable).map(commandeMapper::toDto);
     }
 
-    public CommandeResponseDTO findCommandeById(Long id){
-        Commande commande=commandeRepos.findById(id)
-                .orElseThrow(()->new RuntimeException("Commande introuvable !"));
+    public CommandeResponseDTO findCommandeById(Long id) {
+        Commande commande = commandeRepos.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande introuvable !"));
         return commandeMapper.toDto(commande);
     }
 
-    public long countCommandes(){
+    public long countCommandes() {
         return commandeRepos.count();
     }
 
-    public  Page<CommandeResponseDTO>findCommandesByClientId(Long clientId, Pageable pageable){
+    public Page<CommandeResponseDTO> findCommandesByClientId(Long clientId, Pageable pageable) {
         return commandeRepos.findByClientId(clientId, pageable).map(commandeMapper::toDto);
     }
 
-    public CommandeResponseDTO addCommande(CommandeRequestDTO dto){
+    public CommandeResponseDTO addCommande(CommandeRequestDTO dto) {
 
-        Client client=clientRepos.findById(dto.getClientId())
-                .orElseThrow(()->new RuntimeException("Client introuvable"));
+        Client client = clientRepos.findById(dto.getClientId())
+                .orElseThrow(() -> new RuntimeException("Client introuvable"));
 
-        Commande commande=commandeMapper.toEntity(dto);
+        Commande commande = commandeMapper.toEntity(dto);
         commande.setClient(client);
         commande.setDateCommande(LocalDate.now());
         commande.setStatut(Statut.EN_ATTENTE);
@@ -67,15 +67,15 @@ public class CommandeServiceImpl implements CommandeService {
         return commandeMapper.toDto(commandeRepos.save(commande));
     }
 
-    public LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto){
+    public LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto) {
 
-        Commande commande=commandeRepos.findById(orderId)
-                .orElseThrow(()->new RuntimeException("Commande introuvable"));
+        Commande commande = commandeRepos.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Commande introuvable"));
 
-        Produit produit=produitRepos.findById(dto.getProduitId())
-                .orElseThrow(()->new RuntimeException("Produit introuvable"));
+        Produit produit = produitRepos.findById(dto.getProduitId())
+                .orElseThrow(() -> new RuntimeException("Produit introuvable"));
 
-        LigneCommande ligne=ligneCommandeMapper.toEntity(dto);
+        LigneCommande ligne = ligneCommandeMapper.toEntity(dto);
         ligne.setCommande(commande);
         ligne.setProduit(produit);
         ligne.setQuantite(dto.getQuantite());
@@ -83,9 +83,9 @@ public class CommandeServiceImpl implements CommandeService {
         return ligneCommandeMapper.toDto(ligneCommandeRepos.save(ligne));
     }
 
-    public CommandeResponseDTO updateStatus(Long id, Statut statut){
-        Commande commande =commandeRepos.findById(id)
-                .orElseThrow(()->new RuntimeException("Commande introvable"));
+    public CommandeResponseDTO updateStatus(Long id, Statut statut) {
+        Commande commande = commandeRepos.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande introvable"));
         commande.setStatut(statut);
         return commandeMapper.toDto(commandeRepos.save(commande));
     }
@@ -93,10 +93,18 @@ public class CommandeServiceImpl implements CommandeService {
     public Page<LigneCommandeResponseDTO> getProducts(Long orderId, Pageable pageable) {
 
         commandeRepos.findById(orderId).orElseThrow(() ->
-                        new RuntimeException("Commande introuvable"));
+                new RuntimeException("Commande introuvable"));
 
         return ligneCommandeRepos
                 .findByCommandeId(orderId, pageable)
                 .map(ligneCommandeMapper::toDto);
     }
+
+    public long counOrderLivre (Statut statut,LocalDate dateCommande){
+        return  commandeRepos.countByDateCommande(dateCommande,statut.LIVREE);
+
+    }
+
 }
+
+
