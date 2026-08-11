@@ -78,6 +78,7 @@ public class CommandeServiceImpl implements CommandeService {
         LigneCommande ligne=ligneCommandeMapper.toEntity(dto);
         ligne.setCommande(commande);
         ligne.setProduit(produit);
+        ligne.setQuantite(dto.getQuantite());
 
         return ligneCommandeMapper.toDto(ligneCommandeRepos.save(ligne));
     }
@@ -87,5 +88,15 @@ public class CommandeServiceImpl implements CommandeService {
                 .orElseThrow(()->new RuntimeException("Commande introvable"));
         commande.setStatut(statut);
         return commandeMapper.toDto(commandeRepos.save(commande));
+    }
+
+    public Page<LigneCommandeResponseDTO> getProducts(Long orderId, Pageable pageable) {
+
+        commandeRepos.findById(orderId).orElseThrow(() ->
+                        new RuntimeException("Commande introuvable"));
+
+        return ligneCommandeRepos
+                .findByCommandeId(orderId, pageable)
+                .map(ligneCommandeMapper::toDto);
     }
 }

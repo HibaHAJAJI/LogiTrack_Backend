@@ -64,4 +64,10 @@ public class CommandeController {
     public ResponseEntity<CommandeResponseDTO> updateOrderStatus(@PathVariable Long id,@RequestBody Statut statut){
         return ResponseEntity.ok(commandeService.updateStatus(id, statut));
     }
+
+    @GetMapping("/{id}/products")
+    public Page<LigneCommandeResponseDTO> getProducts(@PathVariable Long id, Pageable pageable) {
+
+        return commandeService.getProducts(id, pageable);
+    }
 }

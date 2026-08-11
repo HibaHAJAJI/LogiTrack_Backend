@@ -13,9 +13,9 @@ import java.util.List;
 
 public interface ProduitRepos extends JpaRepository<Produit,Long> {
 
-    Page<Produit> findByCategorie(String categorie, Pageable pageable);
+    Page<Produit> findByCategorieContainingIgnoreCase(String categorie, Pageable pageable);
 
-    Page<Produit> findByPrixLessThan(double prix, Pageable pageable);
+    Page<Produit> findByPrixLessThanEqual(double prix, Pageable pageable);
 
     @Query("select p from Produit p where p.quantiteStock< :seuil ")
     Page<Produit> findLowStock(@Param("seuil") int seuil,Pageable pageable);

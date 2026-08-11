@@ -41,11 +41,11 @@ public class ProduitServiceImpl  implements ProduitService {
     }
 
     public Page<ProduitResponseDTO> findProductsByCategory(String categorie, Pageable pageable){
-        return repos.findByCategorie(categorie, pageable).map(mapper::toDto);
+        return repos.findByCategorieContainingIgnoreCase(categorie, pageable).map(mapper::toDto);
     }
 
     public Page<ProduitResponseDTO> findProductsByPriceLessThan(double prix, Pageable pageable){
-        return repos.findByPrixLessThan(prix, pageable).map(mapper::toDto);
+        return repos.findByPrixLessThanEqual(prix, pageable).map(mapper::toDto);
     }
 
     public Page<ProduitResponseDTO> findLowStock(int seuil, Pageable pageable){

@@ -24,5 +24,7 @@ public interface CommandeService {
     CommandeResponseDTO updateStatus(Long id, Statut statut);
 
     CommandeResponseDTO addCommande(CommandeRequestDTO dto);
+    
+    Page<LigneCommandeResponseDTO> getProducts(Long orderId, Pageable pageable);
 
 }

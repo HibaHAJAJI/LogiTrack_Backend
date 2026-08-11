@@ -11,5 +11,7 @@ public interface LigneCommandeRepos extends JpaRepository<LigneCommande,Long> {
     @Query("select lc.produit.nom from LigneCommande lc group by lc.produit.id,lc.produit.nom order by sum(lc.quantite) desc")
     Page<String> findMostOrderedProduct(Pageable pageable);
 
+    Page<LigneCommande> findByCommandeId(Long commandeId, Pageable pageable);
+
 
 }
