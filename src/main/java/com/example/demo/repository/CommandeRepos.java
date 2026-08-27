@@ -20,7 +20,7 @@ public interface CommandeRepos extends JpaRepository<Commande,Long> {
     @Query("select c from Commande c order by c.dateCommande desc ")
     Page<Commande> findRecentCommandes(Pageable pageable);
 
-    long countByDateCommande(LocalDate dateCommande,Statut statut);
+    long countByDateCommandeAndStatut(LocalDate dateCommande,Statut statut);
 }
 
 

@@ -74,7 +74,7 @@ public class CommandeController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/count")
+    @GetMapping("/count-by-status")
     public long count(@RequestBody Statut statut,@PathVariable LocalDate dateCommande){
         return commandeService.counOrderLivre(statut,dateCommande);
     }

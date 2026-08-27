@@ -101,7 +101,7 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     public long counOrderLivre (Statut statut,LocalDate dateCommande){
-        return  commandeRepos.countByDateCommande(dateCommande,statut.LIVREE);
+        return  commandeRepos.countByDateCommandeAndStatut(dateCommande,statut.LIVREE);
 
     }
 
