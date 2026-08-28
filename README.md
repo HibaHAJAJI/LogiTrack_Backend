@@ -160,53 +160,47 @@ Le projet est organisé en plusieurs packages afin de séparer les différentes 
 ```text
 LogiTrack/
 │
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
 ├── .idea/
 │
 ├── .mvn/
 │   └── wrapper/
 │
 ├── src/
-│   │
 │   ├── main/
-│   │   │
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── example/
 │   │   │           └── demo/
-│   │   │
 │   │   │               ├── auth/
 │   │   │               │   ├── controller/
 │   │   │               │   ├── dto/
 │   │   │               │   └── service/
 │   │   │               │       └── Impl/
-│   │   │
 │   │   │               ├── config/
 │   │   │               ├── controller/
 │   │   │               ├── dashboard/
-│   │   │
 │   │   │               ├── dto/
 │   │   │               │   ├── client/
 │   │   │               │   ├── commande/
 │   │   │               │   ├── lignecommande/
 │   │   │               │   └── produit/
-│   │   │
 │   │   │               ├── entity/
 │   │   │               ├── enums/
 │   │   │               ├── exception/
 │   │   │               ├── mapper/
 │   │   │               ├── repository/
 │   │   │               ├── security/
-│   │   │
 │   │   │               ├── service/
 │   │   │               │   └── ServiceImpl/
-│   │   │
 │   │   │               └── users/
 │   │   │                   └── dto/
-│   │   │
 │   │   └── resources/
 │   │       └── db/
 │   │           └── migration/
-│   │
 │   └── test/
 │       └── java/
 │           └── com/
@@ -714,68 +708,413 @@ J'ai implémenté l'authentification avec JWT et la sécurisation des endpoints 
 J'ai également configuré Flyway pour les migrations de la base de données, Swagger pour la documentation de l'API, Docker pour la conteneurisation et effectué les tests des endpoints avec Postman.
 
 ---
-
 # 20. Difficultés rencontrées
 
-## Spring Security et JWT
+##  Spring Security et JWT
 
-J'ai rencontré des problèmes d'accès aux endpoints sécurisés, notamment des réponses `401 Unauthorized` et `403 Forbidden`.
+L'une des principales difficultés rencontrées concernait la sécurisation des endpoints de l'API, notamment les réponses `401 Unauthorized` et `403 Forbidden`.
 
-Pour résoudre ces problèmes, j'ai vérifié la configuration de Spring Security, le filtre JWT, l'authentification et les autorisations liées aux rôles.
+Pour résoudre ces problèmes, j'ai analysé et corrigé :
 
-Cette difficulté m'a permis de mieux comprendre le fonctionnement de Spring Security et de l'authentification basée sur JWT.
+* la configuration de **Spring Security** ;
+* le filtre d'authentification **JWT** ;
+* la gestion de l'authentification ;
+* les autorisations associées aux différents rôles ;
+* les règles d'accès aux endpoints.
 
----
-
-## Pagination
-
-La récupération de toutes les données dans une seule requête peut devenir problématique lorsque le volume de données augmente.
-
-J'ai utilisé `Pageable` et `Page<T>` avec Spring Data JPA afin de retourner les résultats sous forme de pages.
-
-Cette étape m'a permis de comprendre comment améliorer les performances des endpoints retournant de grandes quantités de données.
+Cette difficulté m'a permis de mieux comprendre le fonctionnement de **Spring Security**, de l'authentification basée sur **JWT** et de la gestion des rôles et permissions.
 
 ---
 
-## Flyway
+##  Pagination
 
-Les modifications successives de la structure de la base de données nécessitaient une gestion organisée des versions.
+La récupération de l'ensemble des données dans une seule requête peut devenir problématique lorsque le volume de données augmente.
 
-J'ai utilisé Flyway pour créer des migrations versionnées et automatiser leur exécution.
+Pour améliorer les performances des endpoints retournant un grand nombre d'éléments, j'ai utilisé :
 
-Cette difficulté m'a permis de mieux comprendre la gestion de l'évolution d'une base de données dans un projet Spring Boot.
+* `Pageable`
+* `Page<T>`
+* Spring Data JPA
 
----
+Cette approche permet de récupérer les données progressivement sous forme de pages au lieu de charger l'ensemble des résultats en mémoire.
 
-## Entity et DTO
-
-L'utilisation directe des entités dans les réponses de l'API peut créer un couplage entre la base de données et la couche REST.
-
-J'ai utilisé des DTO et MapStruct afin de séparer les données internes des données exposées par l'API.
-
-Cette approche permet d'obtenir une architecture plus propre et plus facile à maintenir.
+Cette étape m'a permis de mieux comprendre les mécanismes de **pagination** et leur importance dans les applications manipulant de grandes quantités de données.
 
 ---
 
-# 21. Améliorations futures
+##  Flyway
 
-Dans une prochaine version, il serait possible de :
+Les modifications successives de la structure de la base de données nécessitaient une gestion organisée et versionnée.
 
-* Ajouter davantage de tests d'intégration
-* Améliorer la gestion globale des exceptions
-* Ajouter des filtres avancés pour les commandes
-* Automatiser davantage la gestion des stocks
-* Ajouter des notifications lors des changements de statut
-* Ajouter des statistiques logistiques supplémentaires
-* Mettre en place une pipeline CI/CD
-* Déployer l'API dans le cloud
-* Ajouter une surveillance avec Prometheus et Grafana
+Pour cela, j'ai intégré **Flyway** afin de :
 
-Ces améliorations permettraient de rendre l'API plus robuste, performante et adaptée à un environnement professionnel.
+* créer des migrations versionnées ;
+* conserver l'historique des modifications de la base ;
+* automatiser l'exécution des migrations ;
+* garantir une structure cohérente de la base de données entre les différents environnements.
+
+Cette difficulté m'a permis de mieux comprendre la gestion de l'évolution d'une base de données dans un projet **Spring Boot**.
 
 ---
 
-# 22. Auteur
+##  Entity et DTO
+
+L'utilisation directe des entités JPA dans les réponses REST peut créer un couplage entre la structure de la base de données et les données exposées par l'API.
+
+Pour résoudre ce problème, j'ai utilisé :
+
+* des **DTO (Data Transfer Objects)** ;
+* **MapStruct** pour automatiser les conversions entre les entités et les DTO.
+
+Cette approche permet de :
+
+* séparer la couche persistence de la couche REST ;
+* contrôler les données exposées par l'API ;
+* éviter d'exposer directement les entités ;
+* améliorer la maintenabilité du projet.
+
+---
+
+# 21. Intégration Continue avec GitHub Actions
+
+LogiTrack intègre une **pipeline d'intégration continue (CI)** avec **GitHub Actions** afin d'automatiser la vérification du projet à chaque modification du code.
+
+Le workflow est défini dans :
+
+```text
+.github/workflows/ci.yml
+```
+
+### Déclenchement de la pipeline
+
+La pipeline est exécutée lors :
+
+* d'un `push` sur les branches `main` et `develop` ;
+* d'une `pull request` vers les branches `main` et `develop`.
+
+### Étapes de la pipeline
+
+La pipeline CI permet notamment de :
+
+1. récupérer le code source ;
+2. configurer **Java 21 Temurin** ;
+3. démarrer les services nécessaires aux tests ;
+4. vérifier la disponibilité de **MySQL 8.0** ;
+5. compiler le projet avec **Maven** ;
+6. exécuter les tests automatisés ;
+7. générer le fichier `.jar` ;
+8. sauvegarder le JAR généré comme **GitHub Actions Artifact**.
+
+###  Services utilisés pour les tests
+
+Les tests utilisent notamment le service :
+
+* **MySQL 8.0**
+
+Des vérifications de santé permettent de s'assurer que les services nécessaires sont disponibles avant l'exécution des tests.
+
+###  Résultat
+
+Cette automatisation permet de détecter rapidement les erreurs introduites dans le code et de garantir qu'une modification ne casse pas les fonctionnalités existantes.
+
+---
+
+# 22. Monitoring avec Spring Boot Actuator
+
+Afin de surveiller l'état et les performances de l'API, LogiTrack utilise **Spring Boot Actuator** avec **Micrometer**.
+
+Actuator permet d'exposer différentes informations concernant l'application et son environnement d'exécution.
+
+### Principaux endpoints
+
+```text
+/actuator/health
+/actuator/info
+/actuator/metrics
+/actuator/prometheus
+```
+
+L'endpoint :
+
+```text
+/actuator/prometheus
+```
+
+expose les métriques dans un format compatible avec **Prometheus**.
+
+### Métriques surveillées
+
+Les métriques permettent notamment de suivre :
+
+* les requêtes HTTP ;
+* les erreurs HTTP ;
+* les temps de réponse ;
+* l'utilisation de la JVM ;
+* l'utilisation de la mémoire ;
+* l'utilisation du CPU ;
+* l'activité générale de l'application.
+
+---
+
+# 23. Prometheus
+
+**Prometheus** est utilisé pour collecter et stocker les métriques exposées par LogiTrack.
+
+Prometheus récupère régulièrement les données disponibles sur :
+
+```text
+/actuator/prometheus
+```
+
+La configuration de Prometheus est définie dans :
+
+```text
+prometheus.yml
+```
+
+Cette configuration permet de définir la cible de collecte et la fréquence de récupération des métriques.
+
+### Fonctionnement
+
+```text
+LogiTrack
+   │
+   │ /actuator/prometheus
+   ▼
+Prometheus
+   │
+   │ métriques
+   ▼
+Grafana
+```
+
+Prometheus constitue ainsi la source de données principale utilisée pour analyser les performances de l'application.
+
+###  Dashboard Prometheus
+
+![img_8.png](img_8.png)
+
+---
+
+# 24. Grafana
+
+**Grafana** est utilisé pour visualiser les métriques collectées par Prometheus ainsi que les logs centralisés avec Loki.
+
+Prometheus est configuré comme **Data Source** dans Grafana.
+
+Un dashboard dédié à LogiTrack permet de suivre plusieurs indicateurs :
+
+*  état de l'API ;
+*  nombre de requêtes HTTP ;
+*  erreurs HTTP ;
+*  temps de réponse ;
+*  utilisation de la mémoire ;
+*  utilisation du CPU ;
+*  activité de l'application.
+
+###  Dashboard LogiTrack
+
+Le dashboard permet à l'équipe technique de suivre l'état de l'application et d'identifier plus rapidement les problèmes de performance ou de disponibilité.
+
+---
+
+# 25. Centralisation des logs avec Loki
+
+**Grafana Loki** est utilisé pour centraliser les logs de l'application LogiTrack.
+
+Cette intégration permet de consulter les logs directement depuis Grafana.
+
+###  Fonctionnalités
+
+Depuis Grafana, il est possible de :
+
+* consulter les logs de LogiTrack ;
+* rechercher une erreur spécifique ;
+* filtrer les logs ;
+* identifier une exception ;
+* analyser les problèmes rencontrés par l'application ;
+* suivre l'activité de l'application en temps réel.
+
+###  Architecture des logs
+
+```text
+LogiTrack
+   │
+   │ Logs
+   ▼
+Loki
+   │
+   │ Logs
+   ▼
+Grafana
+```
+
+La centralisation des logs facilite le diagnostic des erreurs et permet de disposer d'un point central pour l'analyse des problèmes.
+
+![img_7.png](img_7.png)
+
+---
+
+# 26. Alerting avec Alertmanager
+
+LogiTrack intègre également un système d'alerting permettant de détecter automatiquement certaines situations anormales.
+
+Les règles d'alerte sont définies dans :
+
+```text
+alertrules.yml
+```
+
+###  Principales alertes
+
+Les règles configurées permettent notamment de détecter :
+
+* une API indisponible ;
+* un taux d'erreurs HTTP élevé ;
+* un temps de réponse trop important ;
+* une utilisation mémoire élevée.
+
+L'alerte :
+
+```text
+ApiInstanceDown
+```
+
+permet notamment de détecter l'indisponibilité d'une instance de LogiTrack.
+
+###  Fonctionnement
+
+```text
+LogiTrack
+    │
+    ▼
+Prometheus
+    │
+    │ Règles d'alerte
+    ▼
+Alertmanager
+    │
+    ▼
+Notifications
+```
+
+**Alertmanager** reçoit les alertes générées par Prometheus et permet de centraliser leur traitement et leur gestion.
+
+###  Capture Alertmanager
+
+> Ajouter ici une capture montrant une alerte détectée par Alertmanager.
+
+![img_9.png](img_9.png)
+
+---
+
+# 27. Docker Compose — Environnement de monitoring
+
+L'ensemble de l'environnement LogiTrack peut être exécuté avec **Docker Compose**.
+
+Le fichier :
+
+```text
+docker-compose.yml
+```
+
+permet d'orchestrer les différents services nécessaires au fonctionnement de l'application et de son environnement de supervision.
+
+###  Principaux services
+
+| Service          | Rôle                                    |
+| ---------------- | --------------------------------------- |
+| **LogiTrack**    | API Spring Boot                         |
+| **MySQL 8.0**    | Base de données                         |
+| **Prometheus**   | Collecte des métriques                  |
+| **Grafana**      | Visualisation des métriques et des logs |
+| **Loki**         | Centralisation des logs                 |
+| **Alertmanager** | Gestion des alertes                     |
+
+###  Démarrage de l'environnement
+
+```bash
+docker compose up -d
+```
+
+###  Vérification des conteneurs
+
+```bash
+docker compose ps
+```
+
+###  Arrêt de l'environnement
+
+```bash
+docker compose down
+```
+
+L'utilisation de Docker Compose permet de disposer d'un environnement de développement et de monitoring **reproductible, isolé et facilement démarrable**.
+
+---
+
+# 28. Architecture du monitoring
+
+L'ensemble des composants de supervision de LogiTrack fonctionne selon l'architecture suivante :
+
+```text
+                    ┌──────────────────┐
+                    │     LogiTrack    │
+                    │   Spring Boot    │
+                    └────────┬─────────┘
+                             │
+                ┌────────────┴────────────┐
+                │                         │
+                ▼                         ▼
+       /actuator/prometheus             Logs
+                │                         │
+                ▼                         ▼
+         ┌─────────────┐           ┌─────────────┐
+         │  Prometheus │           │     Loki    │
+         └──────┬──────┘           └──────┬──────┘
+                │                         │
+                │                         │
+                └──────────┬──────────────┘
+                           ▼
+                    ┌─────────────┐
+                    │   Grafana   │
+                    └─────────────┘
+                           ▲
+                           │
+                    ┌──────┴──────┐
+                    │ Alertmanager │
+                    └─────────────┘
+```
+
+Cette architecture permet de couvrir plusieurs aspects de la supervision :
+
+* **Monitoring** → Prometheus ;
+* **Visualisation** → Grafana ;
+* **Logs** → Loki ;
+* **Alerting** → Alertmanager.
+
+---
+
+# 29. Améliorations futures
+
+Plusieurs améliorations pourraient être ajoutées dans une prochaine version de LogiTrack :
+
+* Ajouter davantage de tests d'intégration ;
+* Améliorer la gestion globale des exceptions ;
+* Ajouter des filtres avancés pour les commandes ;
+* Automatiser davantage la gestion des stocks ;
+* Ajouter des notifications lors des changements de statut ;
+* Ajouter des statistiques logistiques supplémentaires ;
+* Améliorer la couverture des tests automatisés ;
+* Mettre en place un déploiement automatisé dans le cloud ;
+* Ajouter des mécanismes de sauvegarde et de restauration de la base de données ;
+* Enrichir les dashboards Grafana avec des indicateurs métier supplémentaires.
+
+Ces améliorations permettraient de rendre l'API encore plus **robuste, performante, observable et adaptée à un environnement professionnel**.
+
+---
+
+# 30. Auteur
 
 **Hiba Hajaji**
 
@@ -783,29 +1122,52 @@ Ces améliorations permettraient de rendre l'API plus robuste, performante et ad
 
 **Technologies principales :**
 
-`Java` · `Spring Boot` · `Spring Data JPA` · `Spring Security` · `JWT` · `MySQL` · `Flyway` · `MapStruct` · `Swagger` · `Docker` · `Postman` · `Maven`
+`Java` · `Spring Boot` · `Spring Data JPA` · `Spring Security` · `JWT` · `MySQL` · `Flyway` · `MapStruct` · `Swagger / OpenAPI` · `Docker` · `Docker Compose` · `GitHub Actions` · `Prometheus` · `Grafana` · `Loki` · `Alertmanager` · `Postman` · `Maven`
 
 ---
 
-## 📌 Informations du projet
+##  Informations du projet
 
-| Information          | Détail                |
-| -------------------- | --------------------- |
-| **Projet**           | LogiTrack             |
-| **Type**             | API REST Backend      |
-| **Langage**          | Java 21               |
-| **Framework**        | Spring Boot           |
-| **Base de données**  | MySQL                 |
-| **Sécurité**         | Spring Security + JWT |
-| **Documentation**    | Swagger / OpenAPI     |
-| **Migration**        | Flyway                |
-| **Tests API**        | Postman               |
-| **Conteneurisation** | Docker                |
-| **Frontend**         | Projet séparé         |
+| Information          | Détail                  |
+| -------------------- | ----------------------- |
+| **Projet**           | LogiTrack               |
+| **Type**             | API REST Backend        |
+| **Langage**          | Java 21                 |
+| **Framework**        | Spring Boot             |
+| **Base de données**  | MySQL 8.0               |
+| **Sécurité**         | Spring Security + JWT   |
+| **Documentation**    | Swagger / OpenAPI       |
+| **Migration**        | Flyway                  |
+| **Mapping**          | MapStruct               |
+| **Tests API**        | Postman                 |
+| **Build**            | Maven                   |
+| **Conteneurisation** | Docker + Docker Compose |
+| **CI**               | GitHub Actions          |
+| **Monitoring**       | Prometheus + Grafana    |
+| **Logs**             | Loki                    |
+| **Alerting**         | Alertmanager            |
+| **Frontend**         | Projet séparé           |
 
+---
 
+## 🏁 Conclusion
 
+LogiTrack est une API REST backend développée avec **Java 21 et Spring Boot**, intégrant des mécanismes de sécurité, de migration de base de données, de documentation, de tests, de conteneurisation et de supervision.
 
+Le projet met en œuvre une approche proche d'un environnement professionnel grâce à l'utilisation de :
 
+*  **Spring Security + JWT** pour la sécurité ;
+*  **MySQL + Flyway** pour la gestion des données ;
+*  **DTO + MapStruct** pour la séparation des couches ;
+*  **Swagger / OpenAPI** pour la documentation ;
+*  **Postman** pour les tests API ;
+*  **Docker + Docker Compose** pour la conteneurisation ;
+*  **GitHub Actions** pour l'intégration continue ;
+*  **Prometheus + Grafana** pour le monitoring ;
+*  **Loki** pour la centralisation des logs ;
+*  **Alertmanager** pour la gestion des alertes.
 
+Le projet constitue ainsi une base complète pour le développement et la supervision d'une API REST moderne.
+
+---
 
