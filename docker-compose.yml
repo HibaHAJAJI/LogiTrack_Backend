@@ -14,6 +14,17 @@ services:
     networks:
       - logitrack-network
 
+  grafana:
+        image: grafana/grafana:latest
+        container_name: logitrack-grafana
+        restart: always
+        ports:
+          - "3000:3000"
+        depends_on:
+          - prometheus
+        networks:
+          - logitrack-network
+
   mysqldb:
     image: mysql:8.0
     container_name: logitrack-mysql
