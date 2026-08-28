@@ -15,19 +15,20 @@ services:
       - logitrack-network
 
   grafana:
-        image: grafana/grafana:latest
-        container_name: logitrack-grafana
-        restart: always
-        ports:
-          - "3000:3000"
-        depends_on:
-          - prometheus
-        networks:
-          - logitrack-network
+    image: grafana/grafana:latest
+    container_name: logitrack-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - logitrack-network
 
   loki:
     image: grafana/loki:latest
     container_name: logitrack-loki
+    restart: always
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
@@ -35,16 +36,18 @@ services:
       - logitrack-network
 
   promtail:
-      image: grafana/promtail:latest
-      container_name: logitrack-promtail
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-        - ./promtail-config.yml:/etc/promtail/config.yml
-      command: -config.file=/etc/promtail/config.yml
-      depends_on:
-        - loki
-      networks:
-        - logitrack-network
+    image: grafana/promtail:latest
+    container_name: logitrack-promtail
+    user: root
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - logitrack-network
 
   mysqldb:
     image: mysql:8.0
