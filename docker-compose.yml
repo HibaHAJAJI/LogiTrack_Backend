@@ -14,6 +14,16 @@ services:
     networks:
       - logitrack-network
 
+  alertmanager:
+        image: prom/alertmanager:latest
+        container_name: logitrack-alertmanager
+        restart: always
+        ports:
+          - "9093:9093"
+        networks:
+          - logitrack-network
+
+
   grafana:
     image: grafana/grafana:latest
     container_name: logitrack-grafana
