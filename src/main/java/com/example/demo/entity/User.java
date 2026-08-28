@@ -1,4 +1,4 @@
-package com.example.demo.users;
+package com.example.demo.entity;
 
 
 import com.example.demo.enums.Role;

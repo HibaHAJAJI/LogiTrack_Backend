@@ -5,11 +5,12 @@ package com.example.demo.auth.service.Impl;
 import com.example.demo.auth.dto.AuthResponse;
 import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.auth.service.AuthService;
+import com.example.demo.enums.Role;
 import com.example.demo.security.JwtService;
-import com.example.demo.users.User;
-import com.example.demo.users.UserMapper;
-import com.example.demo.users.UserRepository;
-import com.example.demo.users.dto.UserRegisterRequest;
+import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.dto.user.UserRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         User user =userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setRole(Role.AGENT);
 
         User savedUser = userRepository.save(user);
 

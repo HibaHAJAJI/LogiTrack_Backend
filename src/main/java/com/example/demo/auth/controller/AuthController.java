@@ -4,7 +4,7 @@ package com.example.demo.auth.controller;
 import com.example.demo.auth.dto.AuthResponse;
 import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.auth.service.AuthService;
-import com.example.demo.users.dto.UserRegisterRequest;
+import com.example.demo.dto.user.UserRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

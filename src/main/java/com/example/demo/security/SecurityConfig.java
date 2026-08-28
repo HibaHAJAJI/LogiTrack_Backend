@@ -1,7 +1,7 @@
 package com.example.demo.security;
 
 
-import com.example.demo.users.UserService;
+import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
