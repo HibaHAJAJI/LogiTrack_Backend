@@ -1,6 +1,8 @@
 package com.example.demo.service.ServiceImpl;
 
 
+import com.example.demo.Notification.NotificationClient;
+import com.example.demo.Notification.NotificationDTO;
 import com.example.demo.enums.Statut;
 import com.example.demo.dto.commande.CommandeRequestDTO;
 import com.example.demo.dto.commande.CommandeResponseDTO;
@@ -24,6 +26,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+
+
 @Service
 @RequiredArgsConstructor
 public class CommandeServiceImpl implements CommandeService {
@@ -34,6 +38,7 @@ public class CommandeServiceImpl implements CommandeService {
     private final LigneCommandeRepos ligneCommandeRepos;
     private final CommandeMapper commandeMapper;
     private final LigneCommandeMapper ligneCommandeMapper;
+    private final NotificationClient notificationClient;
 
 
     public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable) {
@@ -63,8 +68,12 @@ public class CommandeServiceImpl implements CommandeService {
         commande.setClient(client);
         commande.setDateCommande(LocalDate.now());
         commande.setStatut(Statut.EN_ATTENTE);
+        Commande savedCommande = commandeRepos.save(commande);
 
-        return commandeMapper.toDto(commandeRepos.save(commande));
+        sendNotificationHelper(savedCommande.getId(), "Votre commande N° " +
+                        savedCommande.getId() + " a été créée avec succès.", "ORDER_CREATED");
+
+        return commandeMapper.toDto(savedCommande);
     }
 
     public LigneCommandeResponseDTO addProduct(Long orderId, LigneCommandeRequestDTO dto) {
@@ -86,7 +95,14 @@ public class CommandeServiceImpl implements CommandeService {
     public CommandeResponseDTO updateStatus(Long id, Statut statut) {
         Commande commande = commandeRepos.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commande introvable"));
+
         commande.setStatut(statut);
+        if (statut == Statut.EXPEDIEE) {
+            sendNotificationHelper(commande.getId(), "Votre commande N° " + commande.getId() + " a été expédiée.", "ORDER_SHIPPED");
+        } else if (statut == Statut.LIVREE) {
+            sendNotificationHelper(commande.getId(), "Votre commande N° " + commande.getId() + " a été livrée.", "ORDER_DELIVERED");
+        }
+
         return commandeMapper.toDto(commandeRepos.save(commande));
     }
 
@@ -101,8 +117,18 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     public long counOrderLivre (Statut statut,LocalDate dateCommande){
-        return  commandeRepos.countByDateCommandeAndStatut(dateCommande,statut.LIVREE);
+        return  commandeRepos.countByDateCommandeAndStatut(dateCommande,Statut.LIVREE);
 
+    }
+
+
+    private void sendNotificationHelper(Long orderId, String message, String type) {
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setOrderId(orderId);
+        notificationDTO.setMessage(message);
+        notificationDTO.setType(type);
+
+        notificationClient.sendNotification(notificationDTO);
     }
 
 }
