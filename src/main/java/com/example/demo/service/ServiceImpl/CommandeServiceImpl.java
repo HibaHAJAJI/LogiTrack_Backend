@@ -20,6 +20,8 @@ import com.example.demo.repository.LigneCommandeRepos;
 import com.example.demo.repository.ProduitRepos;
 import com.example.demo.service.CommandeService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,8 @@ public class CommandeServiceImpl implements CommandeService {
     private final CommandeMapper commandeMapper;
     private final LigneCommandeMapper ligneCommandeMapper;
     private final NotificationClient notificationClient;
+
+    private static final Logger log = LoggerFactory.getLogger(CommandeServiceImpl.class);
 
 
     public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable) {
@@ -123,12 +127,17 @@ public class CommandeServiceImpl implements CommandeService {
 
 
     private void sendNotificationHelper(Long orderId, String message, String type) {
+
         NotificationDTO notificationDTO = new NotificationDTO();
         notificationDTO.setOrderId(orderId);
         notificationDTO.setMessage(message);
         notificationDTO.setType(type);
 
-        notificationClient.sendNotification(notificationDTO);
+        try {
+            notificationClient.sendNotification(notificationDTO);
+        } catch (Exception e) {
+            log.error("Impossible d'envoyer la notification pour la commande {}", orderId, e);
+        }
     }
 
 }
