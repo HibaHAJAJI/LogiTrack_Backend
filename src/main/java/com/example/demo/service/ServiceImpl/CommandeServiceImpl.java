@@ -42,7 +42,6 @@ public class CommandeServiceImpl implements CommandeService {
     private final LigneCommandeMapper ligneCommandeMapper;
     private final NotificationClient notificationClient;
 
-    private static final Logger log = LoggerFactory.getLogger(CommandeServiceImpl.class);
 
 
     public Page<CommandeResponseDTO> findAllCommandes(Pageable pageable) {
@@ -136,7 +135,8 @@ public class CommandeServiceImpl implements CommandeService {
         try {
             notificationClient.sendNotification(notificationDTO);
         } catch (Exception e) {
-            log.error("Impossible d'envoyer la notification pour la commande {}", orderId, e);
+            System.err.println("Impossible d'envoyer la notification pour la commande "
+                    + orderId + " : " + e.getMessage());
         }
     }
 

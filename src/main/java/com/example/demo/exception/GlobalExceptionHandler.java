@@ -45,12 +45,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleResponseStatusException(
             ResponseStatusException ex) {
 
-        return ResponseEntity
-                .status(ex.getStatusCode())
-                .body(Map.of(
-                        "error", ex.getStatusCode().toString(),
-                        "message", ex.getReason()
-                ));
+        return ResponseEntity.status(ex.getStatusCode())
+                .body(Map.of("error", ex.getStatusCode().toString(),
+                        "message", ex.getReason()));
     }
 
 }
